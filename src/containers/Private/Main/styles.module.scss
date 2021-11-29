@@ -1,56 +1,47 @@
 @import 'sources/styles/mixins.scss';
 
-.layout {
-
-  //width: 100%;
-  min-height: 100%;
+.container {
+  flex: 1 !important;
+  max-width: 1420px;
+  min-height: 906px !important;
   overflow: hidden;
+  box-sizing: content-box;
   margin: 0 auto;
   @include flex;
   @include flex-direction(column);
+  background-color: $pageBackground;
 
-  .content {
-    flex: 1 1 auto;
+  .header {
+    @include flex(center, space-between);
     width: 100%;
-    flex: 1 !important;
-    display: flex;
-    flex-direction: column;
-    box-sizing: content-box;
+    z-index: 10;
+    min-height: 132px;
+    background: $pageBackground;
+    padding: 0 75px 0 60px;
+  }
 
-    @include laptop {
-      max-width: 992px;
+  .main {
+    width: 100%;
+
+    position: relative;
+    z-index: 3;
+
+    .sider {
+      background-color: $pageBackground;
+      width: 323px;
     }
 
-
-    .header {
-      @include position-absolute($top: 0, $left: 0);
-      @include flex(center, space-between);
-      width: 100%;
-      z-index: 10;
-      min-height: 96px;
-      background: var(--pageBackground);
-
-      padding: 0 75px 0 60px;
-
-      @include desktop {
-        padding: calc(16px + (60 - 16)* ((100vw - 320px) / (1440 - 320)));
-      }
-
+    .content {
+      background: #FFFFFF;
     }
+  }
 
-    .container {
-      //min-width: 100%;
-      background: var(--contentBackground);
-      position: relative;
-      z-index: 3;
-    }
-
-    .footer {
-      padding: 0;
-      z-index: 10;
-      flex: 0 0 auto;
-    }
-
+  .footer {
+    background-color: $pageBackground;
+    padding: 0;
+    z-index: 10;
+    flex: 0 0 auto;
+    width: 100%;
   }
 
 }

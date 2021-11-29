@@ -3,52 +3,33 @@
 .menuList {
     width: fit-content !important;
     border-style: none !important;
-    @include flex;
+    @include flex(center, space-between);
     flex-wrap: wrap;
 
     .menuItem {
         background: none !important;
         width: fit-content !important;
         padding: 0 !important;
-
         margin: 0px 16px 0px 16px !important;
-
-        @include text-style(18px, 400, 24px, $color: var(--menuText) !important);
-
-        &:hover {
-            color: var(--textColor2) !important;
-            ;
-        }
+        height: auto;
+        @include text-style(18px, 400, 24px, $color: $menuText !important);
 
         &:visited,
         &:focus,
         &:active {
-            color: var(--textColor2) !important;
-            font-weight: bold;
+            color: $menuActiveText !important;
+            position: relative;
+
+            &::after {
+                content: "j";
+                position: absolute;
+                left: 5px;
+                top: 15px;
+            }
         }
 
         &::after {
             border-style: none !important;
         }
     }
-
-    @include laptop {
-        visibility: hidden
-    }
-
-    ;
-
-    @media (max-width: 479px) {
-
-        .menuItem {
-            @include text-style(10px);
-            margin: 0px 5px 0px 5px !important;
-            max-height: 20px;
-        }
-    }
 }
-
-
-
-
-

@@ -1,0 +1,19 @@
+@import './../../sources/styles/mixins.scss';
+
+.avatarContainer {
+    position: relative;
+
+   .statusHolder {
+        @include width-height(28px, 28px);
+        @include position-absolute($left: -10px, $bottom: -10px);
+        @include flex(center, center);
+        border-radius: 50%;
+        background-color: rgba(20, 29, 91, 1);
+
+        .status { 
+            @include width-height(12px, 12px);
+            border-radius: 50%;
+            background-color: #51CC73;
+        }
+    } 
+}
