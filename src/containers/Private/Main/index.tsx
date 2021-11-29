@@ -17,10 +17,13 @@ const Main: React.FC = observer(() => {
 	return (
 		<Layout className={styles.container}>
 			<Header className={styles.header}>
+		{/* 	<div className={styles.blockA}></div>
+				<div className={styles.blockB}></div>
+				<div className={styles.blockC}></div> */}
+
 				<BrendIcon />
 				<MenuBar />
-				<HeaderProfile />
-				<div className={styles.profile}> </div>
+				<HeaderProfile /> 
 			</Header>
 			<Layout className={styles.main}>
 				<Sider className={styles.sider}>Sider</Sider>

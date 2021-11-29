@@ -2,7 +2,7 @@
 
 .avatarContainer {
     position: relative;
-
+    @include position-absolute($right: 0px, $top: 0px);
    .statusHolder {
         @include width-height(28px, 28px);
         @include position-absolute($left: -10px, $bottom: -10px);
