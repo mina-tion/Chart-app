@@ -1,0 +1,13 @@
+@import 'sources/styles/mixins.scss';
+
+.contentWrapper {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100%;
+  padding: 0 0 0 40px;
+
+  .title {
+    margin: 20px 0 50px 0;
+    @include text-style(19.5px, 500, 29.25px, $color: #ffffff);
+  }
+}
