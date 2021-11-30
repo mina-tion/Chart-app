@@ -1,0 +1,29 @@
+@import 'sources/styles/mixins.scss';
+
+.container {
+  width: 66%;
+  height: 100px;
+  background: linear-gradient(-267deg, rgba(0, 0, 0, 0.04) 29.5%, rgba(0, 0, 0, 0) 65.18%);
+  @include flex(center, flex-start);
+
+  .priceListWrapper {
+    width: 66%;
+    padding-left: 60px;
+    @include flex(center, space-between);
+
+    .priceItem {
+
+      .title {
+        @include text-style(13px, 600, 19.5px, $color: #B6B8C6);
+      }
+
+      .text {
+        @include text-style(18px, 600, 27px, $color: #101843);
+      }
+
+      .green {
+        color: #25BF50;
+      }
+    }
+  }
+  }

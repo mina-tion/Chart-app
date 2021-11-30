@@ -2,7 +2,6 @@
 
 .container {
   flex: 1 !important;
-  max-width: 100%;
   min-height: 100% !important;
   overflow: hidden;
   box-sizing: content-box;
@@ -19,14 +18,13 @@
     box-sizing: border-box;
     background-color: $pageBackground !important;
     padding: 40px 104px 0px 40px;
-  
   }
 
   .main {
     width: 100%;
-
     position: relative;
     z-index: 3;
+
 
     .sider {
       background-color: $pageBackground;
