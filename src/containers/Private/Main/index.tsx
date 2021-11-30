@@ -10,6 +10,7 @@ import styles from './styles.module.scss';
 import BrendIcon from 'components/BrendIcon';
 import MenuBar from 'components/MenuBar';
 import HeaderProfile from 'components/HeaderProfile';
+import SiderContent from 'components/SiderContent'
 
 const { Header, Sider, Content } = Layout;
 
@@ -17,16 +18,14 @@ const Main: React.FC = observer(() => {
 	return (
 		<Layout className={styles.container}>
 			<Header className={styles.header}>
-		{/* 	<div className={styles.blockA}></div>
-				<div className={styles.blockB}></div>
-				<div className={styles.blockC}></div> */}
-
 				<BrendIcon />
 				<MenuBar />
-				<HeaderProfile /> 
+				<HeaderProfile />
 			</Header>
 			<Layout className={styles.main}>
-				<Sider className={styles.sider}>Sider</Sider>
+				<Sider className={styles.sider}>
+					<SiderContent />
+				</Sider>
 				<Content className={styles.content}>
 					<HomePage />
 				</Content>
