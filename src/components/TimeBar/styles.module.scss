@@ -1,0 +1,24 @@
+@import 'sources/styles/mixins.scss';
+
+
+.timeBar {
+  width: 375px;
+  height: 50px;
+  background: linear-gradient(0deg, #EDEEF2, #EDEEF2);
+  box-shadow: 0px 4px 15px 5px rgba(0, 0, 0, 0.1);
+  @include flex(center, space-around);
+
+  .timeItem {
+    cursor: pointer;
+    @include text-style(19px, 400, 28.5px, $color:#101843);
+  }
+
+  .active {
+    @include flex-center;
+    @include width-height(74px, 64px);
+
+    color: #1C3CCD;
+    background-color: white;
+  }
+
+}

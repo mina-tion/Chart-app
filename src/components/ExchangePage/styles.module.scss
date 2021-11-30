@@ -1,0 +1,43 @@
+@import 'sources/styles/mixins.scss';
+
+.wrapper {
+
+  @include flex(center, space-between);
+  padding: 0 60px 0 60px;
+  height: 133px;
+
+  .title {
+    @include text-style(33px, 600, 49.5px, $color: #101843);
+    position: relative;
+
+    &::after {
+      cursor: pointer;
+      content: url('./../../sources/images/polygon.svg');
+      @include position-absolute($top: -7px, $right:-25px);
+      @include width-height(10px, 10px);
+
+    }
+  }
+
+  .timeBar {
+    width: 375px;
+    height: 50px;
+    background: linear-gradient(0deg, #EDEEF2, #EDEEF2);
+    box-shadow: 0px 4px 15px 5px rgba(0, 0, 0, 0.1);
+    @include flex(center, space-around);
+
+    .timeItem {
+      cursor: pointer;
+      @include text-style(19px, 400, 28.5px, $color:#101843);
+    }
+
+    .active {
+      @include flex-center;
+      @include width-height(74px, 64px);
+
+      color: #1C3CCD;
+      background-color: white;
+    }
+
+  }
+}

@@ -3,14 +3,15 @@ import { observer } from 'mobx-react';
 
 //components
 import { Layout } from 'antd';
-import HomePage from 'components/HomePage';
-
-// style
-import styles from './styles.module.scss';
 import BrendIcon from 'components/BrendIcon';
 import MenuBar from 'components/MenuBar';
 import HeaderProfile from 'components/HeaderProfile';
 import SiderContent from 'components/SiderContent'
+import ExchangePage from 'components/ExchangePage'
+
+// style
+import styles from './styles.module.scss';
+
 
 const { Header, Sider, Content } = Layout;
 
@@ -27,7 +28,7 @@ const Main: React.FC = observer(() => {
 					<SiderContent />
 				</Sider>
 				<Content className={styles.content}>
-					<HomePage />
+					<ExchangePage />
 				</Content>
 			</Layout>
 			{/* <Footer className={styles.footer}>Footer</Footer> */}

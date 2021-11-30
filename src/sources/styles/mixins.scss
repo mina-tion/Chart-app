@@ -45,6 +45,12 @@ $desktop2KLgDOWN: (max-width: 2560px,
   justify-content: $justify;
 }
 
+@mixin flex-center() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @mixin flex-direction($direction: row) {
   display: flex;
   flex-direction: $direction;
