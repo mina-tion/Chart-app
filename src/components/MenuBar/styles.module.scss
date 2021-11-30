@@ -8,22 +8,28 @@
     box-sizing: content-box;
 
     .menuItem {
-        @include flex(center, center);
         @include text-style(18px, 400, 24px, $color: $menuText !important);
-
+        text-align: center;
         background: none !important;
-        padding: 0 !important;
-        //min-height: 100%;
+        padding: 0px !important;
         margin: 0px !important;
-
+        height: 50px !important;
         position: relative;
+
+
+        &:not(:last-child):after {
+            content: "●";
+            @include width-height(8px, 8px);
+            @include position-absolute($left: 50%, $top: 25px);
+            color: #8AC6FD;
+        }
 
         &:last-child::before {
             content: "SOON";
             @include text-style(8.5px, 500, 13px, $color: #182266);
             @include flex(center, center);
             @include width-height(42px, 16px);
-            @include position-absolute($top: 0px, $right: 45px);
+            @include position-absolute($top: 0px, $right: 0px);
             background-color: #FFFFFF;
             border-radius: 8.5px;
         }
@@ -37,14 +43,6 @@
         &:active {
             color: $menuActiveText !important;
 
-            &:not(:last-child):after {
-                content: "●";
-                @include width-height(8px, 8px);
-                @include position-absolute($left: 50%, $top: 20px);
-                color: #8AC6FD;
-            }
         }
-
-
     }
 }
