@@ -1,13 +1,12 @@
 import { createContext, useContext } from 'react';
 import { configure, observable } from 'mobx';
-
-import postsStore from './Posts';
-
+import exchangeStore from './Exchange'
 
 configure({ enforceActions: 'observed' });
 
 class RootStore {
-	@observable postsStore = postsStore;
+
+	@observable exchangeStore = exchangeStore;
 }
 
 const rootStore = new RootStore();

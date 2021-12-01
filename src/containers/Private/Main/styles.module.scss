@@ -1,6 +1,8 @@
 @import 'sources/styles/mixins.scss';
 
 .container {
+  width: 100%;
+  min-width: 1440px;
   flex: 1 !important;
   min-height: 100% !important;
   overflow: hidden;

@@ -5,7 +5,6 @@ import classNames from 'classnames';
 
 // style
 import styles from './styles.module.scss';
-import TimeBar from 'components/TimeBar';
 
 const priceBlocks = [
 	{ id: 1, title: 'Last trade price', text: '0.00167200 ETH' },
