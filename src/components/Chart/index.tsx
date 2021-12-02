@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { useStore } from 'stores';
-import classNames from 'classnames';
 import Chart from 'components/Chart';
+import classNames from 'classnames';
 
 // style
 import styles from './styles.module.scss';
@@ -26,8 +26,6 @@ const ExchangePage: React.FC = observer(() => {
 			</div>
 
 			<ExchangePrice />
-
-			<Chart />
 		</>
 	);
 });

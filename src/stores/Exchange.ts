@@ -1,6 +1,7 @@
 import { observable, action, makeObservable } from 'mobx';
 import { autorun, set, toJS } from 'mobx';
-
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 
 export function autoSave(_this: any, name: string) {
 	const storedJson = localStorage.getItem(name);
@@ -33,11 +34,11 @@ class Store {
 		{ id: 5, title: 'KNC - USD' },
 	];
 
-	@observable periods: { id: number; value: string }[] = [
-		{ id: 1, value: '3d' },
-		{ id: 2, value: '7d' },
-		{ id: 3, value: '14d' },
-		{ id: 4, value: '1m' },
+	@observable period: { id: number; value: string; unit: string }[] = [
+		{ id: 1, value: '3', unit: 'days' },
+		{ id: 2, value: '7', unit: 'days' },
+		{ id: 3, value: '14', unit: 'days' },
+		{ id: 4, value: '1', unit: 'month' },
 	];
 
 	@observable graphData: [] = [];
@@ -46,9 +47,13 @@ class Store {
 	@action
 	fetchGraphData() {
 		this.graphData = [];
-		this.graphDataStatus = 'pending'
+		this.graphDataStatus = 'pending';
 
-		fetchGraphData(this.getCurrentPair(), 'dg', 'ffg').then(
+		fetchData(
+			this.getCurrentPairTitle(),
+			getStartDate(this.getCurrentPeriod().value, this.getCurrentPeriod().unit),
+			getEndDate()
+		).then(
 			action('fetchSuccess', (response: Response) => {
 				const filteredProjects = response.json();
 				console.log(filteredProjects);
@@ -81,14 +86,23 @@ class Store {
 		return this.currentPeriodId;
 	}
 
+	@action
+	getFormatPeriodValue(period: { id: number; value: string; unit: string }) {
+		return period!.value + period!.unit.slice(0, 1);
+	}
 
 	@action
-	getCurrentPair() {
-		let title: string = '';
-		this.pairs.forEach((pair) => {
-			if (pair.id === this.currentPairId) title = pair.title;
-		});
-		return title;
+	getCurrentPeriod() {
+		return this.period.find((period) =>
+			period.id === this.currentPeriodId ? true : false
+		)!;
+	}
+
+	@action
+	getCurrentPairTitle() {
+		return this.pairs.find((pair) =>
+			pair.id === this.currentPairId ? true : false
+		)?.title;
 	}
 
 	//_________________________________________________________________________
@@ -96,13 +110,18 @@ class Store {
 
 export default new Store();
 
-const fetchGraphData = (
-	curPair: string,
-	startPeriod: string,
-	endPeriod: string
-) => {
+const fetchData = (curPair: any, startDate: any, endDate: any) => {
 	curPair = curPair.split(' ').join('');
 	return fetch(
-		`https://api.pro.coinbase.com/products/${curPair}/candles?granularity=3600&start=2021-11-28T12:29:18&end=2021-12-01T12:29:18`
+		`https://api.pro.coinbase.com/products/${curPair}/candles?granularity=3600&start=${startDate}&end=${endDate}`
 	);
+};
+
+const getEndDate = () => {
+	dayjs.extend(utc);
+	return dayjs().utc().format();
+};
+const getStartDate = (value: string, unit: string) => {
+	dayjs.extend(utc);
+	return dayjs().subtract(Number(value), unit).utc().format();
 };

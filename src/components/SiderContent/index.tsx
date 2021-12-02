@@ -7,7 +7,6 @@ import { observer } from 'mobx-react';
 import styles from './styles.module.scss';
 
 // utils
-//import { cards } from 'utils/cards';
 import classNames from 'classnames';
 import { useStore } from 'stores';
 
@@ -23,16 +22,16 @@ const SiderContent: React.FC = observer(() => {
 	return (
 		<div className={styles.contentWrapper}>
 			<h2 className={styles.title}>Popular pairs</h2>
-			{exchangeStore.pairs.map((card) => (
+			{exchangeStore.pairs.map((pair) => (
 				<li
-					key={card.id}
-					onClick={() => handlerClick(card.id)}
+					key={pair.id}
+					onClick={() => handlerClick(pair.id)}
 					className={classNames(
 						styles.cardWrapper,
-						exchangeStore.getCurrentPairId() === card.id ? styles.active : ''
+						exchangeStore.getCurrentPairId() === pair.id ? styles.active : ''
 					)}
 				>
-					{card.title}
+					{pair.title}
 				</li>
 			))}
 		</div>

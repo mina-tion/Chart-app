@@ -1,0 +1,22 @@
+@import 'sources/styles/mixins.scss';
+
+.wrapper {
+
+  @include flex(center, space-between);
+  padding: 0 60px 0 60px;
+  height: 133px;
+
+  .title {
+    @include text-style(33px, 600, 49.5px, $color: #101843);
+    position: relative;
+
+    &::after {
+      cursor: pointer;
+      content: url('./../../sources/images/polygon.svg');
+      @include position-absolute($top: -7px, $right:-25px);
+      @include width-height(10px, 10px);
+
+    }
+  }
+
+}
