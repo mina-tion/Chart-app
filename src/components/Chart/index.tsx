@@ -13,20 +13,28 @@ const ChartS: React.FC<Props> = observer(() => {
 	const { exchangeStore } = useStore();
 	useEffect(
 		() => exchangeStore.fetchGraphData(),
-		[exchangeStore.currentPairId, exchangeStore.currentPeriodId]
+		[exchangeStore, exchangeStore.currentPairId, exchangeStore.currentPeriodId,  exchangeStore.currentChartId]
 	);
-	console.log(exchangeStore.chartData);
+	console.log('data ', exchangeStore.charts[exchangeStore.getCurrentChartId()]);
+
+
+	////////////////////////////////////////////////////////////
+	
+	let chartType:any = exchangeStore.charts[exchangeStore.getCurrentChartId()-1].type	
+
+
+	/////////////////////////////////////////////////////////////
 	const series = [
 		{
-			name: 'candle',
-			data: exchangeStore.chartData,
+			name: chartType,
+			data: exchangeStore.charts[exchangeStore.getCurrentChartId()-1].data
 		},
 	];
 
 	let options: any = {
 		chart: {
 			height: 350,
-			type: 'candlestick',
+			type: chartType,
 		},
 		title: {
 			text: '',
@@ -75,7 +83,7 @@ const ChartS: React.FC<Props> = observer(() => {
 				<Chart
 					options={options}
 					series={series}
-					type='candlestick'
+					type={chartType}
 					height={400}
 				/>
 			</div>
@@ -84,3 +92,57 @@ const ChartS: React.FC<Props> = observer(() => {
 });
 
 export default ChartS;
+
+/* 
+const series = [
+	{
+		name: 'candle',
+		data: exchangeStore.charts[0].data
+	},
+]; */
+/* 
+let options: any = {
+	chart: {
+		height: 350,
+		type: 'candlestick',
+	},
+	title: {
+		text: '',
+		align: 'left',
+	},
+	annotations: {
+		xaxis: [
+			{
+				x: 'Oct 06 14:00',
+				borderColor: '#00E396',
+				label: {
+					borderColor: '#00E396',
+					style: {
+						fontSize: '12px',
+						color: '#fff',
+						background: '#00E396',
+					},
+					orientation: 'horizontal',
+					offsetY: 7,
+					text: 'Annotation Test',
+				},
+			},
+		],
+	},
+	tooltip: {
+		enabled: true,
+	},
+	xaxis: {
+		type: 'category',
+		labels: {
+			formatter: function (val: any) {
+				return dayjs(val).format('MMM DD HH:mm');
+			},
+		},
+	},
+	yaxis: {
+		tooltip: {
+			enabled: true,
+		},
+	},
+}; */

@@ -17,7 +17,7 @@ const TimePeriodSwitcher: React.FC = observer(() => {
 
 	return (
 		<ul className={styles.periodList}>
-			{exchangeStore.period.map((period) => (
+			{exchangeStore.period.map((period:any) => (
 				<li
 					key={period.id}
 					onClick={() => handlerClick(period.id)}

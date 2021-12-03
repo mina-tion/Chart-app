@@ -22,12 +22,16 @@ class Store {
 		makeObservable(this);
 		this.accessToken = '';
 		autoSave(this, 'currencyPairsStore');
-		console.log(this.period)
+		console.log(this.charts);
 	}
 
 	//charts
-	@observable chartData: [] = [];
 	@observable chartDataStatus: string = 'pending';
+	@observable currentChartId: number = 1;
+	@observable charts: any = [
+		{ id: 1, type: 'candlestick', data: [] },
+		{ id: 2, type: 'line', data: [] },
+	];
 
 	//currency pairs
 	@observable currentPairId: number = 1;
@@ -41,12 +45,7 @@ class Store {
 
 	//time periods
 	@observable currentPeriodId: number = 1;
-	@observable period: {
-		id: number;
-		value: string;
-		unit: string;
-		granularity: string;
-	}[] = periods;
+	@observable period: any = periods;
 
 	//_________________________________________________________________________
 
@@ -68,7 +67,7 @@ class Store {
 		)?.title;
 	}
 
-	//currency periods
+	// periods
 	@action
 	setCurrentPeriodId(id: number) {
 		this.currentPeriodId = id;
@@ -86,14 +85,35 @@ class Store {
 
 	@action
 	getCurrentPeriod() {
-		return this.period.find((period) =>
+		return this.period.find((period: any) =>
 			period.id === this.currentPeriodId ? true : false
 		)!;
 	}
 
+	//charts
+	@action
+	setCurrentChartId(id: number) {
+		this.currentChartId = id;
+	}
+
+	@action
+	getCurrentChartId() {
+		return this.currentChartId;
+	}
+
+	@action
+	getCandlestickChart() { 
+		return this.charts.find((chart: any)=> chart.type === 'candlestick');
+	}
+
+	@action
+	getLineChart() { 
+		return this.charts.find((chart: any)=> chart.type === 'line');
+	}
+
 	@action
 	fetchGraphData() {
-		this.chartData = [];
+		console.log(this.charts);
 		this.chartDataStatus = 'pending';
 		//console.log(this.getCurrentPeriod().unit)
 		fetchData(
@@ -106,15 +126,18 @@ class Store {
 				return res.json();
 			})
 			.then((data) => {
-				return data.map((item: any, index: number) => {
+				this.getCandlestickChart().data = data.map((item: any, index: number) => {
 					return {
 						x: new Date(item[0] * 1000),
 						y: [item[3], item[2], item[1], item[4]],
 					};
 				});
-			})
-			.then((chartData) => {
-				this.chartData = chartData;
+				this.getLineChart().data = data.map((item: any, index: number) => {
+					return {
+						x: new Date(item[0] * 1000),
+						y: item[4],
+					};
+				});
 				this.chartDataStatus = 'done';
 			})
 			.catch((e) => {

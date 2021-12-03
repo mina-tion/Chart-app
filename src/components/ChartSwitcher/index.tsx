@@ -9,26 +9,31 @@ import styles from './styles.module.scss';
 
 const ChartSwitcher: React.FC = observer(() => {
 	const { exchangeStore } = useStore();
-	useEffect(() => {}, [exchangeStore.currentPeriodId]);
+	console.log(exchangeStore.charts);
 
 	const handlerClick = (id: number) => {
-		exchangeStore.setCurrentPeriodId(id);
+		exchangeStore.setCurrentChartId(id);
 	};
 
+	useEffect(
+		() => exchangeStore.fetchGraphData(),
+		[exchangeStore.currentChartId]
+	);
+
 	return (
-		<ul className={styles.periodList}>
-			{exchangeStore.period.map((period) => (
+		<ul className={styles.chartList}>
+			{exchangeStore.charts.map((chartType: any) => (
 				<li
-					key={period.id}
-					onClick={() => handlerClick(period.id)}
+					key={chartType.id}
+					onClick={() => handlerClick(chartType.id)}
 					className={classNames(
-						styles.periodItem,
-						exchangeStore.getCurrentPeriodId() === period.id
+						styles.chartItem,
+						exchangeStore.getCurrentChartId() === chartType.id
 							? styles.active
 							: ''
 					)}
 				>
-					{exchangeStore.getFormatPeriodValue(period)}
+					{chartType.type}
 				</li>
 			))}
 		</ul>
