@@ -2,6 +2,8 @@ import { observable, action, makeObservable } from 'mobx';
 import { autorun, set, toJS } from 'mobx';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
+import { log } from 'console';
+import { periods } from 'utils/periods';
 
 export function autoSave(_this: any, name: string) {
 	const storedJson = localStorage.getItem(name);
@@ -20,57 +22,35 @@ class Store {
 		makeObservable(this);
 		this.accessToken = '';
 		autoSave(this, 'currencyPairsStore');
+		console.log(this.period)
 	}
 
-	//_________________________________________________________________________
+	//charts
+	@observable chartData: [] = [];
+	@observable chartDataStatus: string = 'pending';
 
+	//currency pairs
 	@observable currentPairId: number = 1;
-	@observable currentPeriodId: number = 1;
 	@observable pairs: { id: number; title: string }[] = [
 		{ id: 1, title: 'BTC - USD' },
 		{ id: 2, title: 'ETH - USD' },
-		{ id: 3, title: 'OMG - USD' },
+		{ id: 3, title: 'AGLD-USDT' },
 		{ id: 4, title: 'LTC - USD' },
 		{ id: 5, title: 'KNC - USD' },
 	];
 
-	@observable period: { id: number; value: string; unit: string }[] = [
-		{ id: 1, value: '3', unit: 'days' },
-		{ id: 2, value: '7', unit: 'days' },
-		{ id: 3, value: '14', unit: 'days' },
-		{ id: 4, value: '1', unit: 'month' },
-	];
+	//time periods
+	@observable currentPeriodId: number = 1;
+	@observable period: {
+		id: number;
+		value: string;
+		unit: string;
+		granularity: string;
+	}[] = periods;
 
-	@observable graphData: [] = [];
-	@observable graphDataStatus: string = 'pending';
-
-	@action
-	fetchGraphData() {
-		this.graphData = [];
-		this.graphDataStatus = 'pending';
-
-		fetchData(
-			this.getCurrentPairTitle(),
-			getStartDate(this.getCurrentPeriod().value, this.getCurrentPeriod().unit),
-			getEndDate()
-		).then(
-			action('fetchSuccess', (response: Response) => {
-				const filteredProjects = response.json();
-				console.log(filteredProjects);
-				this.graphDataStatus = 'done';
-			}),
-			action('fetchError', (error: {}) => {
-				this.graphDataStatus = 'error';
-			})
-		);
-	}
 	//_________________________________________________________________________
 
-	@action
-	setCurrentPeriodId(id: number) {
-		this.currentPeriodId = id;
-	}
-
+	//currency pairs
 	@action
 	setCurrentPairId(id: number) {
 		this.currentPairId = id;
@@ -82,13 +62,26 @@ class Store {
 	}
 
 	@action
+	getCurrentPairTitle() {
+		return this.pairs.find((pair) =>
+			pair.id === this.currentPairId ? true : false
+		)?.title;
+	}
+
+	//currency periods
+	@action
+	setCurrentPeriodId(id: number) {
+		this.currentPeriodId = id;
+	}
+
+	@action
 	getCurrentPeriodId() {
 		return this.currentPeriodId;
 	}
 
 	@action
-	getFormatPeriodValue(period: { id: number; value: string; unit: string }) {
-		return period!.value + period!.unit.slice(0, 1);
+	getFormatPeriodValue(per: { id: number; value: string; unit: string }) {
+		return per.value + per.unit.slice(0, 1);
 	}
 
 	@action
@@ -99,21 +92,53 @@ class Store {
 	}
 
 	@action
-	getCurrentPairTitle() {
-		return this.pairs.find((pair) =>
-			pair.id === this.currentPairId ? true : false
-		)?.title;
+	fetchGraphData() {
+		this.chartData = [];
+		this.chartDataStatus = 'pending';
+		//console.log(this.getCurrentPeriod().unit)
+		fetchData(
+			this.getCurrentPairTitle(),
+			getStartDate(this.getCurrentPeriod().value, this.getCurrentPeriod().unit),
+			getEndDate(),
+			this.getCurrentPeriod().granularity
+		)
+			.then((res) => {
+				return res.json();
+			})
+			.then((data) => {
+				return data.map((item: any, index: number) => {
+					return {
+						x: new Date(item[0] * 1000),
+						y: [item[3], item[2], item[1], item[4]],
+					};
+				});
+			})
+			.then((chartData) => {
+				this.chartData = chartData;
+				this.chartDataStatus = 'done';
+			})
+			.catch((e) => {
+				this.chartDataStatus = 'error';
+				console.log(e);
+			});
 	}
-
-	//_________________________________________________________________________
 }
 
 export default new Store();
 
-const fetchData = (curPair: any, startDate: any, endDate: any) => {
-	curPair = curPair.split(' ').join('');
+const fetchData = (
+	curPair: any,
+	startDate: any,
+	endDate: any,
+	granularity: string
+) => {
+	console.log('granularity', granularity);
 	return fetch(
-		`https://api.pro.coinbase.com/products/${curPair}/candles?granularity=3600&start=${startDate}&end=${endDate}`
+		`https://api.pro.coinbase.com/products/${curPair
+			.split(' ')
+			.join(
+				''
+			)}/candles?granularity=${granularity}&start=${startDate}&end=${endDate}`
 	);
 };
 

@@ -14,20 +14,21 @@ import TimePeriodSwitcher from 'components/TimePeriodSwitcher';
 
 const ExchangePage: React.FC = observer(() => {
 	const { exchangeStore } = useStore();
-	exchangeStore.fetchGraphData();
 
-	useEffect(() => {}, [exchangeStore.currentPairId]);
+	useEffect(() => {exchangeStore.fetchGraphData();}, [exchangeStore, exchangeStore.currentPairId]);
 
 	return (
 		<>
 			<div className={styles.wrapper}>
 				<h1 className={styles.title}>{exchangeStore.getCurrentPairTitle()}</h1>
+				ChartSwitcher
 				<TimePeriodSwitcher />
 			</div>
 
 			<ExchangePrice />
-
-			<Chart />
+			<div id='chart'>
+				<Chart />
+			</div>
 		</>
 	);
 });
