@@ -13,7 +13,7 @@ import { useStore } from 'stores';
 const SiderContent: React.FC = observer(() => {
 	const { exchangeStore } = useStore();
 
-	//useEffect(() => {}, [exchangeStore._currentPairId]);
+	useEffect(() => {}, [exchangeStore.currentPairId]);
 
 	const handlerClick = (id: number) => {
 		exchangeStore.setCurrentPairId(id);

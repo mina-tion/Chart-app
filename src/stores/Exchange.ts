@@ -1,8 +1,7 @@
-import { observable, action, makeObservable } from 'mobx';
+import { observable, action, makeObservable, computed } from 'mobx';
 import { autorun, set, toJS } from 'mobx';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import { log } from 'console';
 import { periods } from 'utils/periods';
 
 export function autoSave(_this: any, name: string) {
@@ -19,6 +18,7 @@ export function autoSave(_this: any, name: string) {
 class Store {
 	public accessToken: string;
 	constructor() {
+		localStorage.clear()
 		makeObservable(this);
 		this.accessToken = '';
 		autoSave(this, 'currencyPairsStore');
@@ -101,14 +101,18 @@ class Store {
 		return this.currentChartId;
 	}
 
-	@action
-	getCandlestickChart() { 
-		return this.charts.find((chart: any)=> chart.type === 'candlestick');
+	@computed get currentPeriodID() {
+		return this.currentPeriodId;
 	}
 
 	@action
-	getLineChart() { 
-		return this.charts.find((chart: any)=> chart.type === 'line');
+	getCandlestickChart() {
+		return this.charts.find((chart: any) => chart.type === 'candlestick');
+	}
+
+	@action
+	getLineChart() {
+		return this.charts.find((chart: any) => chart.type === 'line');
 	}
 
 	@action
@@ -126,12 +130,14 @@ class Store {
 				return res.json();
 			})
 			.then((data) => {
-				this.getCandlestickChart().data = data.map((item: any, index: number) => {
-					return {
-						x: new Date(item[0] * 1000),
-						y: [item[3], item[2], item[1], item[4]],
-					};
-				});
+				this.getCandlestickChart().data = data.map(
+					(item: any, index: number) => {
+						return {
+							x: new Date(item[0] * 1000),
+							y: [item[3], item[2], item[1], item[4]],
+						};
+					}
+				);
 				this.getLineChart().data = data.map((item: any, index: number) => {
 					return {
 						x: new Date(item[0] * 1000),
