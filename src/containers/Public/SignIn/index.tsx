@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import GoogleLogin from 'react-google-login';
-
+import { isLogin, login } from 'utils/login';
 // style
 import styles from './styles.module.scss';
 
@@ -19,6 +19,8 @@ const SingIn: React.FC = observer(() => {
 	});
 
 	const responseGoogle = (response: any) => {
+		console.log(isLogin())
+		login('Anastasia');
 		console.log(response);
 	};
 

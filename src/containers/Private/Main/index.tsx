@@ -8,13 +8,13 @@ import MenuBar from 'components/MenuBar';
 import HeaderProfile from 'components/HeaderProfile';
 import SiderContent from 'components/SiderContent'
 import ExchangePage from 'components/ExchangePage'
-
+import { isLogin } from 'utils/login';
 // style
 import styles from './styles.module.scss';
 
 
 const { Header, Sider, Content } = Layout;
-
+console.log(isLogin())
 const Main: React.FC = observer(() => {
 	return (
 		<Layout className={styles.container}>

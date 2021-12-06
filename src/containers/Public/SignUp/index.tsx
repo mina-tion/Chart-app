@@ -62,7 +62,7 @@ const SingUp: React.FC = observer(() => {
 					<p className={styles.error}>{errors.passwordConfirmation?.message}</p>
 				</div>
 
-				<input type='submit' value='Sign in' className={styles.submitButton} />
+				<input type='submit' value='Sign up' className={styles.submitButton} />
 			</form>
 		</div>
 	);
