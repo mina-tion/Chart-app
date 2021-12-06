@@ -1,11 +1,10 @@
 import { createContext, useContext } from 'react';
 import { configure, observable } from 'mobx';
-import exchangeStore from './Exchange'
+import exchangeStore from './Exchange';
 
 configure({ enforceActions: 'observed' });
 
 class RootStore {
-
 	@observable exchangeStore = exchangeStore;
 }
 

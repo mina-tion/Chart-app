@@ -16,13 +16,11 @@ import ChartSwitcher from 'components/ChartSwitcher';
 const ExchangePage: React.FC = observer(() => {
 	const { exchangeStore } = useStore();
 
-	useEffect(() => {exchangeStore.fetchGraphData();}, [exchangeStore, exchangeStore.currentPairId]);
-
 	return (
 		<>
 			<div className={styles.wrapper}>
 				<h1 className={styles.title}>{exchangeStore.getCurrentPairTitle()}</h1>
-				 <ChartSwitcher />
+				<ChartSwitcher />
 				<TimePeriodSwitcher />
 			</div>
 

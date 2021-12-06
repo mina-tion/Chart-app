@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 //components
@@ -17,7 +17,12 @@ const ChartSwitcher: React.FC = observer(() => {
 
 	useEffect(
 		() => exchangeStore.fetchGraphData(),
-		[exchangeStore.currentChartId]
+		[
+			exchangeStore,
+			exchangeStore.currentPairId,
+			exchangeStore.currentPeriodId,
+			exchangeStore.currentChartId,
+		]
 	);
 
 	return (

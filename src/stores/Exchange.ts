@@ -3,6 +3,8 @@ import { autorun, set, toJS } from 'mobx';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { periods } from 'utils/periods';
+import { currencyPairs } from 'utils/currencyPairs';
+import { chartTypes } from 'utils/chartTypes';
 
 export function autoSave(_this: any, name: string) {
 	const storedJson = localStorage.getItem(name);
@@ -18,7 +20,6 @@ export function autoSave(_this: any, name: string) {
 class Store {
 	public accessToken: string;
 	constructor() {
-		localStorage.clear()
 		makeObservable(this);
 		this.accessToken = '';
 		autoSave(this, 'currencyPairsStore');
@@ -28,20 +29,11 @@ class Store {
 	//charts
 	@observable chartDataStatus: string = 'pending';
 	@observable currentChartId: number = 1;
-	@observable charts: any = [
-		{ id: 1, type: 'candlestick', data: [] },
-		{ id: 2, type: 'line', data: [] },
-	];
+	@observable charts: any = chartTypes;
 
 	//currency pairs
 	@observable currentPairId: number = 1;
-	@observable pairs: { id: number; title: string }[] = [
-		{ id: 1, title: 'BTC - USD' },
-		{ id: 2, title: 'ETH - USD' },
-		{ id: 3, title: 'AGLD-USDT' },
-		{ id: 4, title: 'LTC - USD' },
-		{ id: 5, title: 'KNC - USD' },
-	];
+	@observable pairs: { id: number; title: string }[] = currencyPairs;
 
 	//time periods
 	@observable currentPeriodId: number = 1;

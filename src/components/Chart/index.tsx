@@ -9,15 +9,7 @@ import { setOptions } from 'utils/chartOptions';
 
 const ChartS: React.FC = observer(() => {
 	const { exchangeStore } = useStore();
-	useEffect(
-		() => exchangeStore.fetchGraphData(),
-		[
-			exchangeStore,
-			exchangeStore.currentPairId,
-			exchangeStore.currentPeriodId,
-			exchangeStore.currentChartId,
-		]
-	);
+
 	let chartType: any =
 		exchangeStore.charts[exchangeStore.getCurrentChartId() - 1].type;
 	const series: any = [
