@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import { useStore } from 'stores';
-import classNames from 'classnames';
 import Chart from 'components/Chart';
 
 // style
@@ -18,16 +17,13 @@ const ExchangePage: React.FC = observer(() => {
 
 	return (
 		<>
-			<div className={styles.wrapper}>
+			<div className={styles.container}>
 				<h1 className={styles.title}>{exchangeStore.getCurrentPairTitle()}</h1>
 				<ChartSwitcher />
 				<TimePeriodSwitcher />
 			</div>
-
 			<ExchangePrice />
-			<div id='chart'>
-				<Chart />
-			</div>
+			<Chart />
 		</>
 	);
 });

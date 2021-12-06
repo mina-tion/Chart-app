@@ -1,7 +1,6 @@
 @import 'sources/styles/mixins.scss';
 
-.wrapper {
-
+.container {
   @include flex(center, space-between);
   padding: 0 60px 0 60px;
   height: 133px;
@@ -18,5 +17,4 @@
 
     }
   }
-
 }

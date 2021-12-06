@@ -9,7 +9,6 @@ import styles from './styles.module.scss';
 
 const ChartSwitcher: React.FC = observer(() => {
 	const { exchangeStore } = useStore();
-	console.log(exchangeStore.charts);
 
 	const handlerClick = (id: number) => {
 		exchangeStore.setCurrentChartId(id);
