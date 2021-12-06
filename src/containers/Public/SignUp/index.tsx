@@ -22,33 +22,49 @@ const SingUp: React.FC = observer(() => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<p>First name</p>
-			<input {...register('firstName')} onChange={() => handlerChange} />
-			<p>{errors.firstName?.message}</p>
+		<div className={styles.container}>
+			<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+				<div className={styles.inputContainer}>
+					<p className={styles.inputTitle}>First name</p>
+					<input
+						{...register('firstName')}
+						onChange={() => handlerChange}
+						className={styles.inputField}
+					/>
+					<p className={styles.error}>{errors.firstName?.message}</p>
+				</div>
+				<div className={styles.inputContainer}>
+					<p className={styles.inputTitle}>Surname</p>
+					<input
+						{...register('firstName')}
+						onChange={() => handlerChange}
+						className={styles.inputField}
+					/>
+					<p className={styles.error}>{errors.firstName?.message}</p>
+				</div>
+				<div className={styles.inputContainer}>
+					<p className={styles.inputTitle}>Password</p>
+					<input
+						{...register('password')}
+						type='password'
+						className={styles.inputField}
+					/>
+					<p className={styles.error}>{errors.password?.message}</p>
+				</div>
 
-			<p>Surname</p>
-			<input {...register('firstName')} onChange={() => handlerChange} />
-			<p>{errors.firstName?.message}</p>
+				<div className={styles.inputContainer}>
+					<p className={styles.inputTitle}>Password Confirmation</p>
+					<input
+						{...register('passwordConfirmation')}
+						type='password'
+						className={styles.inputField}
+					/>
+					<p className={styles.error}>{errors.passwordConfirmation?.message}</p>
+				</div>
 
-			<p>Password</p>
-			<input
-				{...register('password')}
-				type='password'
-				className={styles.password}
-			/>
-			<p>{errors.password?.message}</p>
-
-			<p>Password Confirmation</p>
-			<input
-				{...register('passwordConfirmation')}
-				type='password'
-				className={styles.password}
-			/>
-			<p>{errors.passwordConfirmation?.message}</p>
-
-			<input type='submit' />
-		</form>
+				<input type='submit' value='Sign in' className={styles.submitButton} />
+			</form>
+		</div>
 	);
 });
 
