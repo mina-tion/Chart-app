@@ -31,7 +31,6 @@ const Main: React.FC = observer(() => {
 					<ExchangePage />
 				</Content>
 			</Layout>
-			{/* <Footer className={styles.footer}>Footer</Footer> */}
 		</Layout>
 	);
 });
