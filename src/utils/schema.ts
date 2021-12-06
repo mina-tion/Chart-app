@@ -10,11 +10,6 @@ export const schema = yup
 			.min(2, 'First name is too short - should be 2 chars minimum.'),
 		lastName: yup.string().required(),
 		email: yup.string().email().required(),
-		/* password: yup
-			.string()
-			.required('No password provided.')
-			.min(8, 'Password is too short - should be 8 chars minimum.')
-			.matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'), */
 		password: yup
 			.string()
 			.required('Password is required')
