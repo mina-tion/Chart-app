@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect} from 'react';
 import { observer } from 'mobx-react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -19,9 +19,12 @@ const SingIn: React.FC = observer(() => {
 		resolver: yupResolver(schema),
 	});
 
+
 	const responseGoogle = (response: any) => {
 		login(response.wc.access_token);
-		loginStore.setAccountName(response.profileObj.familyName + '' +  response.profileObj.givenName);
+		loginStore.setAccountName(
+			response.profileObj.familyName + '' + response.profileObj.givenName
+		);
 		console.log(response);
 		console.log(isLogin());
 	};
