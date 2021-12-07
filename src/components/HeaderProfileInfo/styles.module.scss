@@ -21,4 +21,11 @@
         text-align: center;
         @include text-style(13px, 400, 19.5px, $color: rgba(190, 182, 182, 1))
     }
+
+
+    .button {
+        height: fit-content;
+        @include text-style(16px, $color: #ffffff);
+        text-decoration: underline !important;
+    }
 }

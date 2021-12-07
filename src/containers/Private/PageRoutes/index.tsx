@@ -4,12 +4,12 @@ import { Route, Switch } from 'react-router-dom'
 import Main from '../Main'
 
 
-const PrivatePages: React.FC = observer(() => {
+const PrivatePages: React.FC = () => {
   return (
     <Switch>
-      <Route exact path="/main" component={Main} />
+      <Route exact path="/" component={Main} />
     </Switch>
   )
-})
+}
 
 export default PrivatePages
