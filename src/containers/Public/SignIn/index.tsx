@@ -20,7 +20,7 @@ const SingIn: React.FC = observer(() => {
 
 	const responseGoogle = (response: any) => {
 		console.log(isLogin())
-		login('Anastasia');
+		login('true');
 		console.log(response);
 	};
 

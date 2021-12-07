@@ -5,6 +5,7 @@ import Main from '../Main'
 
 
 const PrivatePages: React.FC = () => {
+  
   return (
     <Switch>
       <Route exact path="/" component={Main} />

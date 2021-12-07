@@ -15,7 +15,7 @@ import styles from './styles.module.scss';
 
 const { Header, Sider, Content } = Layout;
 console.log(isLogin())
-const Main: React.FC = observer(() => {
+const Main: React.FC = () => {
 	return (
 		<Layout className={styles.container}>
 			<Header className={styles.header}>
@@ -33,6 +33,6 @@ const Main: React.FC = observer(() => {
 			</Layout>
 		</Layout>
 	);
-});
+};
 
 export default Main;
