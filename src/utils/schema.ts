@@ -6,10 +6,15 @@ export const schema = yup
 	.object({
 		firstName: yup
 			.string()
-			.uppercase()
 			.required('No first name provided')
-			.min(2, 'First name is too short - should be 2 chars minimum.'),
-		lastName: yup.string().required('No surname provided'),
+			.min(2, 'First name is too short - should be 2 chars minimum.')
+			.matches(/[A-Z,А-Я][a-z, а-я]+/, 'Must have a passport form'),
+
+		lastName: yup
+			.string()
+			.required('No surname provided')
+			.min(2, 'First name is too short - should be 2 chars minimum.')
+			.matches(/[A-Z,А-Я][a-z, а-я]+/, 'Must have a passport form'),
 		email: yup
 			.string()
 			.email('Email must be a valid email')
