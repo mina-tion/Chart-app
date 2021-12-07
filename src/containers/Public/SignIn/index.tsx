@@ -6,10 +6,11 @@ import GoogleLogin from 'react-google-login';
 import { isLogin, login } from 'utils/login';
 // style
 import styles from './styles.module.scss';
-
+import { useStore } from 'stores';
 import { schema, onSubmit } from 'utils/schema';
 
 const SingIn: React.FC = observer(() => {
+	const { loginStore } = useStore();
 	const {
 		register,
 		handleSubmit,
@@ -19,9 +20,10 @@ const SingIn: React.FC = observer(() => {
 	});
 
 	const responseGoogle = (response: any) => {
-		console.log(isLogin())
-		login('true');
+		login(response.wc.access_token);
+		loginStore.setAccountName(response.profileObj.familyName + '' +  response.profileObj.givenName);
 		console.log(response);
+		console.log(isLogin());
 	};
 
 	return (

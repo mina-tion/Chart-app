@@ -18,7 +18,9 @@ const SingUp: React.FC = observer(() => {
 	});
 
 	const handlerChange = (e: any) => {
-		console.log(e.target.value);
+		e.target.value =
+			e.target.value.charAt(0).toUpperCase() +
+			e.target.value.substr(1).toLowerCase();
 	};
 
 	return (
@@ -28,7 +30,7 @@ const SingUp: React.FC = observer(() => {
 					<p className={styles.inputTitle}>First name</p>
 					<input
 						{...register('firstName')}
-						onChange={() => handlerChange}
+						onChange={handlerChange}
 						className={styles.inputField}
 					/>
 					<p className={styles.error}>{errors.firstName?.message}</p>
@@ -36,8 +38,8 @@ const SingUp: React.FC = observer(() => {
 				<div className={styles.inputContainer}>
 					<p className={styles.inputTitle}>Surname</p>
 					<input
-						{...register('firstName')}
-						onChange={() => handlerChange}
+						{...register('lastName')}
+						onChange={handlerChange}
 						className={styles.inputField}
 					/>
 					<p className={styles.error}>{errors.firstName?.message}</p>

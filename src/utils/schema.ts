@@ -9,7 +9,7 @@ export const schema = yup
 			.uppercase()
 			.required('No first name provided')
 			.min(2, 'First name is too short - should be 2 chars minimum.'),
-		lastName: yup.string().required(),
+		lastName: yup.string().required('No surname provided'),
 		email: yup
 			.string()
 			.email('Email must be a valid email')
