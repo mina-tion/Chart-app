@@ -24,7 +24,7 @@ class Store {
 
 	//charts
 	@observable accountName: string = '';
-    @observable isLogin: boolean = false;
+
 	setAccountName(value: string) {
 		this.accountName = value;
 	}

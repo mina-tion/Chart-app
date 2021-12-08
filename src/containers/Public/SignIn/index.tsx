@@ -8,9 +8,11 @@ import { isLogin, login } from 'utils/login';
 import styles from './styles.module.scss';
 import { useStore } from 'stores';
 import { schema, onSubmit } from 'utils/schema';
+import { useHistory } from 'react-router';
 
 const SingIn: React.FC = observer(() => {
 	const { loginStore } = useStore();
+	const history = useHistory()
 	const {
 		register,
 		handleSubmit,
@@ -25,8 +27,10 @@ const SingIn: React.FC = observer(() => {
 		loginStore.setAccountName(
 			response.profileObj.familyName + '' + response.profileObj.givenName
 		);
+		history.push('/')
 		console.log(response);
 		console.log(isLogin());
+		
 	};
 
 	return (

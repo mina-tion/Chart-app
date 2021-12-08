@@ -6,14 +6,13 @@ import { isLogin } from 'utils/login';
 
 const PublicRoute = ({
 	component: Component,
-	restricted,
 	...rest
 }: any): any => {
 	return (
 		<Route
 			{...rest}
 			render={(props) =>
-				isLogin() && restricted ? <Redirect to='/' /> : <Component {...props} />
+				isLogin()  ? <Redirect to='/' /> : <Component {...props} />
 			}
 		/>
 	);
