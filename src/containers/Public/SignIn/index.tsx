@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,7 +12,7 @@ import { useHistory } from 'react-router';
 
 const SingIn: React.FC = observer(() => {
 	const { loginStore } = useStore();
-	const history = useHistory()
+	const history = useHistory();
 	const {
 		register,
 		handleSubmit,
@@ -21,16 +21,12 @@ const SingIn: React.FC = observer(() => {
 		resolver: yupResolver(schema),
 	});
 
-
 	const responseGoogle = (response: any) => {
 		login(response.wc.access_token);
 		loginStore.setAccountName(
 			response.profileObj.familyName + '' + response.profileObj.givenName
 		);
-		history.push('/')
-		console.log(response);
-		console.log(isLogin());
-		
+		history.push('/');
 	};
 
 	return (

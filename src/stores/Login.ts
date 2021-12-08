@@ -20,8 +20,6 @@ class Store {
 		autoSave(this, 'currencyPairsStore');
 	}
 
-
-
 	//charts
 	@observable accountName: string = '';
 
