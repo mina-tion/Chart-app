@@ -1,13 +1,21 @@
 @import 'sources/styles/mixins.scss';
-
 .table {
   .header {
     background-color: rgb(190, 195, 195);
+
     .title {
+      border: 1px solid black;
       padding: 0 10px 0 10px;
       @include text-style(20px, 700);
     }
   }
 
-  .body {}
+  .body {
+    .row {
+      .item {
+        padding: 0 10px 0 10px;
+      }
+    }
+  }
+
 }

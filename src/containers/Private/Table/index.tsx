@@ -1,22 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
-
+import { useStore } from 'stores';
 //components
 // style
 import styles from './styles.module.scss';
 
-const headerTitles = [
-	'First Name',
-	'Middle Name',
-	'Last Name',
-	'Last Position',
-	'Email',
-	'Phone Number',
-	'LinkedIn URL',
-	'Company Name',
-];
+const headerTitles = ['Id', 'Name', 'Email', 'Body', 'Email'];
 
 const Table: React.FC = observer(() => {
+	const { tableStore } = useStore();
+	console.log(tableStore.commentsData.length);
+	useEffect(() => {
+		tableStore.fetchTableData();
+	}, []);
+
 	return (
 		<table className={styles.table}>
 			<thead className={styles.header}>
@@ -25,16 +22,13 @@ const Table: React.FC = observer(() => {
 				))}
 			</thead>
 			<tbody>
-				<tr>
-					<td>Anna</td>
-					<td>Ann</td>
-					<td>Skrypnyk</td>
-					<td>dfsfsfs</td>
-					<td>adad</td>
-					<td>Anna</td>
-					<td>Ann</td>
-					<td>Skrypnyk</td>
-				</tr>
+				{tableStore.commentsData.map((comment: any) => (
+					<tr className={styles.row}>
+						{Object.keys(comment).map((key): any => (
+							<td className={styles.item}>{comment[key]}</td>
+						))}
+					</tr>
+				))}
 			</tbody>
 		</table>
 	);
