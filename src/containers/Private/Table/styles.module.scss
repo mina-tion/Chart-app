@@ -1,0 +1,13 @@
+@import 'sources/styles/mixins.scss';
+
+.table {
+  .header {
+    background-color: rgb(190, 195, 195);
+    .title {
+      padding: 0 10px 0 10px;
+      @include text-style(20px, 700);
+    }
+  }
+
+  .body {}
+}
