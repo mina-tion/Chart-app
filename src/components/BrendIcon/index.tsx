@@ -9,8 +9,8 @@ import { brendIcons } from 'utils/brendIcons';
 const BrendIcon: React.FC = observer(() => {
 	return (
 		<div className={styles.iconContainer}>
-			{brendIcons.map((icon) => (
-				<img src={icon} className={styles.img} alt='brend' />
+			{brendIcons.map((icon, index) => (
+				<img key={index} src={icon} className={styles.img} alt='brend' />
 			))}
 		</div>
 	);

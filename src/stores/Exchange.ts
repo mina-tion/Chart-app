@@ -5,6 +5,7 @@ import utc from 'dayjs/plugin/utc';
 import { periods } from 'utils/periods';
 import { currencyPairs } from 'utils/currencyPairs';
 import { chartTypes } from 'utils/chartTypes';
+import { api } from 'config';
 
 export function autoSave(_this: any, name: string) {
 	const storedJson = localStorage.getItem(name);
@@ -109,9 +110,7 @@ class Store {
 
 	@action
 	fetchGraphData() {
-		console.log(this.charts);
 		this.chartDataStatus = 'pending';
-		//console.log(this.getCurrentPeriod().unit)
 		fetchData(
 			this.getCurrentPairTitle(),
 			getStartDate(this.getCurrentPeriod().value, this.getCurrentPeriod().unit),
@@ -119,10 +118,7 @@ class Store {
 			this.getCurrentPeriod().granularity
 		)
 			.then((res) => {
-				return res.json();
-			})
-			.then((data) => {
-				this.getCandlestickChart().data = data.map(
+				this.getCandlestickChart().data = res.data.map(
 					(item: any, index: number) => {
 						return {
 							x: new Date(item[0] * 1000),
@@ -130,7 +126,15 @@ class Store {
 						};
 					}
 				);
-				this.getLineChart().data = data.map((item: any, index: number) => {
+				this.getCandlestickChart().data = res.data.map(
+					(item: any, index: number) => {
+						return {
+							x: new Date(item[0] * 1000),
+							y: [item[3], item[2], item[1], item[4]],
+						};
+					}
+				);
+				this.getLineChart().data = res.data.map((item: any, index: number) => {
 					return {
 						x: new Date(item[0] * 1000),
 						y: item[4],
@@ -154,12 +158,9 @@ const fetchData = (
 	granularity: string
 ) => {
 	console.log('granularity', granularity);
-	return fetch(
-		`https://api.pro.coinbase.com/products/${curPair
-			.split(' ')
-			.join(
-				''
-			)}/candles?granularity=${granularity}&start=${startDate}&end=${endDate}`
+	return api.get(
+		`/products/${curPair.split(' ').join('')}
+		/candles?granularity=${granularity}&start=${startDate}&end=${endDate}`
 	);
 };
 

@@ -1,13 +1,10 @@
 import axios from 'axios';
-
-const token = localStorage.getItem('jwt');
+console.log(process.env.REACT_APP_COINBASE_URL)
 
 export const api = axios.create({
-	baseURL: process.env.REACT_APP_HOST,
-	headers: {
-		Authorization: `Bearer ${token}`,
-	},
+	baseURL: process.env.REACT_APP_COINBASE_URL,
 	validateStatus: function (status) {
 		return (status >= 200 && status < 300) || status === 400;
 	},
 });
+

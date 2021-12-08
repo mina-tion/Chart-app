@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import GoogleLogin from 'react-google-login';
-import { isLogin, login } from 'utils/login';
+import { login } from 'utils/login';
 // style
 import styles from './styles.module.scss';
 import { useStore } from 'stores';
