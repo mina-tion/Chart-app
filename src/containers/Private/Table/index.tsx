@@ -5,7 +5,7 @@ import { useStore } from 'stores';
 // style
 import styles from './styles.module.scss';
 
-const headerTitles = ['Id', 'Name', 'Email', 'Body', 'Email'];
+const headerTitles = ['Id', 'Name', 'Email', 'Body'];
 
 const Table: React.FC = observer(() => {
 	const { tableStore } = useStore();
@@ -21,7 +21,7 @@ const Table: React.FC = observer(() => {
 					<th className={styles.title}>{title}</th>
 				))}
 			</thead>
-			<tbody>
+			<tbody className={styles.body}>
 				{tableStore.commentsData.map((comment: any) => (
 					<tr className={styles.row}>
 						{Object.keys(comment).map((key): any => (
