@@ -25,7 +25,7 @@ const SingUp: React.FC = () => {
 			e.target.value.substr(1).toLowerCase();
 	};
 	const handlerClick = () => {
-		//history.push('/login');
+		history.push('/login');
 	};
 	return useObserver(()=> (
 		<div className={styles.container}>

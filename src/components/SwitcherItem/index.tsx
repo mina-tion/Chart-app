@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { observer } from 'mobx-react';
 import classNames from 'classnames';
+import { useObserver } from 'mobx-react-lite';
 //components
 
 import { useStore } from 'stores';
@@ -12,10 +12,10 @@ interface Props {
 	type: string;
 }
 
-const SwitcherItem: React.FC<Props> = observer(({ type, key }) => {
+const SwitcherItem: React.FC<Props> = ({ type, key }) => {
 	const { exchangeStore } = useStore();
 
-	return (
+	return useObserver(() => (
 		<li
 			key={key}
 			onClick={() => exchangeStore.setCurrentChartType(type)}
@@ -26,7 +26,7 @@ const SwitcherItem: React.FC<Props> = observer(({ type, key }) => {
 		>
 			{type}
 		</li>
-	);
-});
+	));
+};
 
 export default SwitcherItem;
