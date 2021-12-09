@@ -6,7 +6,7 @@ import styles from './styles.module.scss';
 
 import { brendIcons } from 'utils/brendIcons';
 
-const BrendIcon: React.FC = observer(() => {
+const BrendIcon: React.FC = () => {
 	return (
 		<div className={styles.iconContainer}>
 			{brendIcons.map((icon, index) => (
@@ -14,6 +14,6 @@ const BrendIcon: React.FC = observer(() => {
 			))}
 		</div>
 	);
-});
+};
 
 export default BrendIcon;

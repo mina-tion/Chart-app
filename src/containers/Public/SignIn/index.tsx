@@ -1,5 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import GoogleLogin from 'react-google-login';
@@ -10,8 +9,9 @@ import { useStore } from 'stores';
 import { schema, onSubmit } from 'utils/schema';
 import { useHistory } from 'react-router';
 import InputField from 'components/InputField';
+import { useObserver } from 'mobx-react-lite';
 
-const SingIn: React.FC = observer(() => {
+const SingIn: React.FC = () => {
 	const { loginStore } = useStore();
 	const history = useHistory();
 	const {
@@ -30,11 +30,11 @@ const SingIn: React.FC = observer(() => {
 		history.push('/');
 	};
 
-	const handlerClick = () => { 
-		history.push('/register')
-	}
+	const handlerClick = () => {
+		history.push('/register');
+	};
 
-	return (
+	return useObserver(() => (
 		<div className={styles.signInContainer}>
 			<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
 				<InputField
@@ -67,9 +67,11 @@ const SingIn: React.FC = observer(() => {
 				/>
 			</div>
 
-			<a href="" className={styles.link} onClick={handlerClick}>Don't have an account yet? Sign up</a>
+			<a href='' className={styles.link} onClick={handlerClick}>
+				Don't have an account yet? Sign up
+			</a>
 		</div>
-	);
-});
+	));
+};
 
 export default SingIn;

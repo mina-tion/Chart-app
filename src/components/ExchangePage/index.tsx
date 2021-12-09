@@ -1,5 +1,5 @@
 import React from 'react';
-import { observer } from 'mobx-react';
+import { useObserver } from 'mobx-react-lite';
 import { useStore } from 'stores';
 import Chart from 'components/Chart';
 
@@ -12,10 +12,10 @@ import ExchangePrice from 'components/ExchangePrice';
 import TimePeriodSwitcher from 'components/TimePeriodSwitcher';
 import ChartSwitcher from 'components/ChartSwitcher';
 
-const ExchangePage: React.FC = observer(() => {
+const ExchangePage: React.FC = () => {
 	const { exchangeStore } = useStore();
 
-	return (
+	return useObserver(() => (
 		<>
 			<div className={styles.container}>
 				<h1 className={styles.title}>{exchangeStore.getCurrentPairTitle()}</h1>
@@ -25,7 +25,7 @@ const ExchangePage: React.FC = observer(() => {
 			<ExchangePrice />
 			<Chart />
 		</>
-	);
-});
+	));
+};
 
 export default ExchangePage;

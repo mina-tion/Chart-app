@@ -1,5 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react';
 import classNames from 'classnames';
 //components
 
@@ -12,7 +11,7 @@ const priceBlocks = [
 	{ id: 3, title: '24 hour volume', text: '42.738493 OMG' },
 ];
 
-const ExchangePrice: React.FC = observer(() => {
+const ExchangePrice: React.FC = () => {
 	return (
 		<div className={styles.container}>
 			<div className={styles.priceListWrapper}>
@@ -32,6 +31,6 @@ const ExchangePrice: React.FC = observer(() => {
 			</div>
 		</div>
 	);
-});
+};
 
 export default ExchangePrice;

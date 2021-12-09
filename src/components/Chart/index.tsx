@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import Chart from 'react-apexcharts';
-
 import { useStore } from 'stores';
 //components
 

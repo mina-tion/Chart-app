@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { observer } from 'mobx-react';
+import React from 'react';
+import { useObserver } from 'mobx-react-lite';
 import classNames from 'classnames';
 //components
 
@@ -7,10 +7,10 @@ import { useStore } from 'stores';
 // style
 import styles from './styles.module.scss';
 
-const TimePeriodSwitcher: React.FC = observer(() => {
+const TimePeriodSwitcher: React.FC = () => {
 	const { exchangeStore } = useStore();
 
-	return (
+	return useObserver(() => (
 		<ul className={styles.periodList}>
 			{exchangeStore.period.map((period: any) => (
 				<li
@@ -25,7 +25,7 @@ const TimePeriodSwitcher: React.FC = observer(() => {
 				</li>
 			))}
 		</ul>
-	);
-});
+	));
+};
 
 export default TimePeriodSwitcher;

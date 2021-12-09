@@ -14,7 +14,7 @@ import styles from './styles.module.scss';
 
 const { Header, Sider, Content } = Layout;
 
-const Main: React.FC = () => {
+const Main: React.FC = observer(() => {
 	const { exchangeStore } = useStore();
 
 	useEffect(() => {
@@ -38,6 +38,6 @@ const Main: React.FC = () => {
 			</Layout>
 		</Layout>
 	);
-};
+});
 
 export default Main;

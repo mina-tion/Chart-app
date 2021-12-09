@@ -1,5 +1,5 @@
 import React from 'react';
-import { observer } from 'mobx-react';
+import { useObserver } from 'mobx-react-lite';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -9,9 +9,7 @@ import InputField from 'components/InputField';
 import styles from './styles.module.scss';
 import { useHistory } from 'react-router';
 
-
-
-const SingUp: React.FC = observer(() => {
+const SingUp: React.FC = () => {
 	const history = useHistory();
 	const {
 		register,
@@ -26,10 +24,10 @@ const SingUp: React.FC = observer(() => {
 			e.target.value.charAt(0).toUpperCase() +
 			e.target.value.substr(1).toLowerCase();
 	};
-	const handlerClick = () => { 
-		history.goBack()
-	}
-	return (
+	const handlerClick = () => {
+		//history.push('/login');
+	};
+	return useObserver(()=> (
 		<div className={styles.container}>
 			<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
 				<InputField
@@ -68,10 +66,11 @@ const SingUp: React.FC = observer(() => {
 				<input type='submit' value='Sign up' className={styles.submitButton} />
 			</form>
 
-			<a href="/" className={styles.link} onClick={handlerClick}>Already have an account? Sign in</a>
-
+			<a href='/' className={styles.link} onClick={handlerClick}>
+				Already have an account? Sign in
+			</a>
 		</div>
-	);
-});
+	))
+};
 
 export default SingUp;
