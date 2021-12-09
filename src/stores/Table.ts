@@ -6,7 +6,6 @@ class Store {
 	constructor() {
 		makeObservable(this);
 	}
-
 	//charts
 	@observable commentsData: any = [];
 	@observable isLoading: boolean = false;
@@ -15,6 +14,7 @@ class Store {
 
 	@action setCurrentPage(value: number) {
 		this.currentPage = value;
+		this.fetchTableData();
 	}
 	@action setLoading(value: boolean) {
 		this.isLoading = value;
@@ -22,11 +22,12 @@ class Store {
 
 	@action
 	async fetchTableData() {
+		this.commentsData = [];
 		console.log(this.currentPage, 'curPage');
 		const res = await api.get(
 			`https://jsonplaceholder.typicode.com/comments?_page=${this.currentPage}&_limit=10`
 		);
-		console.log(res);
+		console.log(res.data);
 		res.data.forEach((comment: any) => {
 			let commentInfo = {
 				id: comment.id,

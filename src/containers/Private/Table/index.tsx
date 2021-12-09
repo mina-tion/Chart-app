@@ -10,21 +10,21 @@ const headerTitles = ['Id', 'Name', 'Email', 'Body'];
 
 const Table: React.FC = observer(() => {
 	const { tableStore } = useStore();
+	
 	useEffect(() => {
 		tableStore.setLoading(true);
 		tableStore.fetchTableData();
 		tableStore.setLoading(false);
-	}, [tableStore, tableStore.currentPage]);
+	}, []);
 
 	const handlerChange = (page: number) => {
-		console.log(page);
 		tableStore.setCurrentPage(page);
 	};
 
 	if (tableStore.isLoading) {
 		return <h1>Loading...</h1>;
 	}
-
+	console.log(tableStore.commentsData)
 	return (
 		<>
 			<table className={styles.table}>

@@ -26,10 +26,6 @@ class Store {
 	setAccountName(value: string) {
 		this.accountName = value;
 	}
-
-	getAccountName() {
-		return this.accountName;
-	}
 }
 
 export default new Store();
