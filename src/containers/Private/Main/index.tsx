@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 
 //components
@@ -6,16 +6,21 @@ import { Layout } from 'antd';
 import BrendIcon from 'components/BrendIcon';
 import MenuBar from 'components/MenuBar';
 import HeaderProfile from 'components/HeaderProfile';
-import SiderContent from 'components/SiderContent'
-import ExchangePage from 'components/ExchangePage'
-import { isLogin } from 'utils/login';
+import SiderContent from 'components/SiderContent';
+import ExchangePage from 'components/ExchangePage';
+import { useStore } from 'stores';
 // style
 import styles from './styles.module.scss';
 
-
 const { Header, Sider, Content } = Layout;
-console.log(isLogin())
+
 const Main: React.FC = () => {
+	const { exchangeStore } = useStore();
+
+	useEffect(() => {
+		exchangeStore.fetchGraphData();
+	}, []);
+
 	return (
 		<Layout className={styles.container}>
 			<Header className={styles.header}>

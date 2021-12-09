@@ -9,6 +9,7 @@ import styles from './styles.module.scss';
 import { useStore } from 'stores';
 import { schema, onSubmit } from 'utils/schema';
 import { useHistory } from 'react-router';
+import InputField from 'components/InputField';
 
 const SingIn: React.FC = observer(() => {
 	const { loginStore } = useStore();
@@ -29,24 +30,29 @@ const SingIn: React.FC = observer(() => {
 		history.push('/');
 	};
 
+	const handlerClick = () => { 
+		history.push('/register')
+	}
+
 	return (
 		<div className={styles.signInContainer}>
 			<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-				<div className={styles.inputContainer}>
-					<p className={styles.inputTitle}>E-mail</p>
-					<input {...register('email')} className={styles.inputField} />
-					<p className={styles.error}>{errors.email?.message}</p>
-				</div>
-
-				<div className={styles.inputContainer}>
-					<p className={styles.inputTitle}>Password</p>
-					<input
-						{...register('password')}
-						type='password'
-						className={styles.inputField}
-					/>
-					<p className={styles.error}>{errors.password?.message}</p>
-				</div>
+				<InputField
+					register={register}
+					type='text'
+					title='E-mail'
+					name='email'
+					errMessage={errors.email?.message}
+					onChange={() => {}}
+				/>
+				<InputField
+					register={register}
+					type='password'
+					title='Password'
+					name='password'
+					errMessage={errors.password?.message}
+					onChange={() => {}}
+				/>
 
 				<input type='submit' value='Sign in' className={styles.submitButton} />
 			</form>
@@ -60,6 +66,8 @@ const SingIn: React.FC = observer(() => {
 					cookiePolicy='single_host_origin'
 				/>
 			</div>
+
+			<a href="" className={styles.link} onClick={handlerClick}>Don't have an account yet? Sign up</a>
 		</div>
 	);
 });

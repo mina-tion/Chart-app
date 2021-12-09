@@ -1,36 +1,18 @@
 import { observable, action, makeObservable, computed } from 'mobx';
-import { autorun, set, toJS } from 'mobx';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import { periods } from 'utils/periods';
 import { currencyPairs } from 'utils/currencyPairs';
-import { chartTypes } from 'utils/chartTypes';
+import { candlestickChart, lineChart } from 'utils/chartTypes';
 import { api } from 'config';
-
-export function autoSave(_this: any, name: string) {
-	const storedJson = localStorage.getItem(name);
-	if (storedJson) {
-		set(_this, JSON.parse(storedJson));
-	}
-	autorun(() => {
-		const value = toJS(_this);
-		localStorage.setItem(name, JSON.stringify(value));
-	});
-}
+import { getStartDate, getEndDate } from 'utils/getDate';
 
 class Store {
-	public accessToken: string;
 	constructor() {
 		makeObservable(this);
-		this.accessToken = '';
-		autoSave(this, 'currencyPairsStore');
-		console.log(this.charts);
 	}
-
 	//charts
-	@observable chartDataStatus: string = 'pending';
-	@observable currentChartId: number = 1;
-	@observable charts: any = chartTypes;
+	@observable candlestickChart: any = candlestickChart;
+	@observable lineChart: any = lineChart;
+	@observable currentChartType: string = candlestickChart.type;
 
 	//currency pairs
 	@observable currentPairId: number = 1;
@@ -46,129 +28,61 @@ class Store {
 	@action
 	setCurrentPairId(id: number) {
 		this.currentPairId = id;
-	}
-
-	@action
-	getCurrentPairId() {
-		return this.currentPairId;
-	}
-
-	@action
-	getCurrentPairTitle() {
-		return this.pairs.find((pair) =>
-			pair.id === this.currentPairId ? true : false
-		)?.title;
+		this.fetchGraphData();
 	}
 
 	// periods
 	@action
 	setCurrentPeriodId(id: number) {
 		this.currentPeriodId = id;
-	}
-
-	@action
-	getCurrentPeriodId() {
-		return this.currentPeriodId;
-	}
-
-	@action
-	getFormatPeriodValue(per: { id: number; value: string; unit: string }) {
-		return per.value + per.unit.slice(0, 1);
-	}
-
-	@action
-	getCurrentPeriod() {
-		return this.period.find((period: any) =>
-			period.id === this.currentPeriodId ? true : false
-		)!;
+		this.fetchGraphData();
 	}
 
 	//charts
 	@action
-	setCurrentChartId(id: number) {
-		this.currentChartId = id;
+	setCurrentChartType(type: string) {
+		this.currentChartType = type;
+		this.fetchGraphData();
+	}
+
+	getCurrentPairTitle() {
+		return this.pairs.find((pair) =>
+			pair.id === this.currentPairId ? true : false
+		)?.title;
 	}
 
 	@action
-	getCurrentChartId() {
-		return this.currentChartId;
-	}
+	async fetchGraphData() {
+		const curPair = this.getCurrentPairTitle()!.split(' ').join('');
+		const granularity = this.period.find(
+			(period: any) => period.id === this.currentPeriodId
+		).granularity;
+		const startDate = getStartDate(
+			this.period.find((period: any) => period.id === this.currentPeriodId)
+				.value,
+			this.period.find((period: any) => period.id === this.currentPeriodId).unit
+		);
+		const endDate = getEndDate();
 
-	@computed get currentPeriodID() {
-		return this.currentPeriodId;
-	}
+		const res = await api.get(
+			`/products/${curPair}
+			/candles?granularity=${granularity}&start=${startDate}&end=${endDate}`
+		);
 
-	@action
-	getCandlestickChart() {
-		return this.charts.find((chart: any) => chart.type === 'candlestick');
-	}
+		this.candlestickChart.data = res.data.map((item: any, index: number) => {
+			return {
+				x: new Date(item[0] * 1000),
+				y: [item[3], item[2], item[1], item[4]],
+			};
+		});
 
-	@action
-	getLineChart() {
-		return this.charts.find((chart: any) => chart.type === 'line');
-	}
-
-	@action
-	fetchGraphData() {
-		this.chartDataStatus = 'pending';
-		fetchData(
-			this.getCurrentPairTitle(),
-			getStartDate(this.getCurrentPeriod().value, this.getCurrentPeriod().unit),
-			getEndDate(),
-			this.getCurrentPeriod().granularity
-		)
-			.then((res) => {
-				this.getCandlestickChart().data = res.data.map(
-					(item: any, index: number) => {
-						return {
-							x: new Date(item[0] * 1000),
-							y: [item[3], item[2], item[1], item[4]],
-						};
-					}
-				);
-				this.getCandlestickChart().data = res.data.map(
-					(item: any, index: number) => {
-						return {
-							x: new Date(item[0] * 1000),
-							y: [item[3], item[2], item[1], item[4]],
-						};
-					}
-				);
-				this.getLineChart().data = res.data.map((item: any, index: number) => {
-					return {
-						x: new Date(item[0] * 1000),
-						y: item[4],
-					};
-				});
-				this.chartDataStatus = 'done';
-			})
-			.catch((e) => {
-				this.chartDataStatus = 'error';
-				console.log(e);
-			});
+		this.lineChart.data = res.data.map((item: any, index: number) => {
+			return {
+				x: new Date(item[0] * 1000),
+				y: item[4],
+			};
+		});
 	}
 }
 
 export default new Store();
-
-const fetchData = (
-	curPair: any,
-	startDate: any,
-	endDate: any,
-	granularity: string
-) => {
-	console.log('granularity', granularity);
-	return api.get(
-		`/products/${curPair.split(' ').join('')}
-		/candles?granularity=${granularity}&start=${startDate}&end=${endDate}`
-	);
-};
-
-const getEndDate = () => {
-	dayjs.extend(utc);
-	return dayjs().utc().format();
-};
-const getStartDate = (value: string, unit: string) => {
-	dayjs.extend(utc);
-	return dayjs().subtract(Number(value), unit).utc().format();
-};

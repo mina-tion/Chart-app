@@ -9,26 +9,19 @@ import styles from './styles.module.scss';
 
 const TimePeriodSwitcher: React.FC = observer(() => {
 	const { exchangeStore } = useStore();
-	useEffect(() => {}, [exchangeStore.currentPeriodId]);
-
-	const handlerClick = (id: number) => {
-		exchangeStore.setCurrentPeriodId(id);
-	};
 
 	return (
 		<ul className={styles.periodList}>
 			{exchangeStore.period.map((period: any) => (
 				<li
 					key={period.id}
-					onClick={() => handlerClick(period.id)}
+					onClick={() => exchangeStore.setCurrentPeriodId(period.id)}
 					className={classNames(
 						styles.periodItem,
-						exchangeStore.getCurrentPeriodId() === period.id
-							? styles.active
-							: ''
+						exchangeStore.currentPeriodId === period.id && styles.active
 					)}
 				>
-					{exchangeStore.getFormatPeriodValue(period)}
+					{period.value + period.unit.slice(0, 1)}
 				</li>
 			))}
 		</ul>

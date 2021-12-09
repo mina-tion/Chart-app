@@ -1,6 +1,5 @@
 import { observable, action, makeObservable } from 'mobx';
 
-
 import { api } from 'config';
 
 class Store {
@@ -10,31 +9,33 @@ class Store {
 
 	//charts
 	@observable commentsData: any = [];
+	@observable isLoading: boolean = false;
+	@observable currentPage: number = 1;
+	@observable commentsPerPage: number = 10;
+
+	@action setCurrentPage(value: number) {
+		this.currentPage = value;
+	}
+	@action setLoading(value: boolean) {
+		this.isLoading = value;
+	}
 
 	@action
-	fetchTableData() {
-		api
-			.get('https://jsonplaceholder.typicode.com/comments')
-			.then((res) => {
-				return res.data;
-			})
-			.then((data) => {
-				console.log(data);
-				console.log(data[0].id, data[0].name.split(' ')[0]);
-				data.forEach((comment: any) => {
-					let commentInfo = {
-						id: comment.id,
-						name: comment.name,
-						email: comment.email,
-						body: comment.body,
-					};
-					this.commentsData.push(commentInfo);
-				});
-				console.log(this.commentsData);
-			})
-			.catch((e) => {
-				console.log(e);
-			});
+	async fetchTableData() {
+		console.log(this.currentPage, 'curPage');
+		const res = await api.get(
+			`https://jsonplaceholder.typicode.com/comments?_page=${this.currentPage}&_limit=10`
+		);
+		console.log(res);
+		res.data.forEach((comment: any) => {
+			let commentInfo = {
+				id: comment.id,
+				name: comment.name,
+				email: comment.email,
+				body: comment.body,
+			};
+			this.commentsData.push(commentInfo);
+		});
 	}
 }
 

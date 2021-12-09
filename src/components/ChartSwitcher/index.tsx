@@ -1,45 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
-import classNames from 'classnames';
-//components
-
 import { useStore } from 'stores';
+
+//components
+import SwitcherItem from 'components/SwitcherItem';
+
 // style
 import styles from './styles.module.scss';
 
 const ChartSwitcher: React.FC = observer(() => {
 	const { exchangeStore } = useStore();
 
-	const handlerClick = (id: number) => {
-		exchangeStore.setCurrentChartId(id);
-	};
-
-	useEffect(
-		() => exchangeStore.fetchGraphData(),
-		[
-			exchangeStore,
-			exchangeStore.currentPairId,
-			exchangeStore.currentPeriodId,
-			exchangeStore.currentChartId,
-		]
-	);
-
 	return (
 		<ul className={styles.chartList}>
-			{exchangeStore.charts.map((chartType: any) => (
-				<li
-					key={chartType.id}
-					onClick={() => handlerClick(chartType.id)}
-					className={classNames(
-						styles.chartItem,
-						exchangeStore.getCurrentChartId() === chartType.id
-							? styles.active
-							: ''
-					)}
-				>
-					{chartType.type}
-				</li>
-			))}
+			<SwitcherItem key={1} type={exchangeStore.candlestickChart.type} />
+			<SwitcherItem key={2} type={exchangeStore.lineChart.type} />
 		</ul>
 	);
 });

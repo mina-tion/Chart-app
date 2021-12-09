@@ -39,4 +39,13 @@
             }
         }
     }
+
+    .link { 
+        margin-top: 20px;
+        color: rgb(197, 230, 240);
+
+        &:hover { 
+            text-decoration: underline !important;
+        }
+    }
 }

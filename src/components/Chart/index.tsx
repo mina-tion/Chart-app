@@ -10,20 +10,20 @@ import { setOptions } from 'utils/chartOptions';
 const ChartS: React.FC = observer(() => {
 	const { exchangeStore } = useStore();
 
-	let chartType: any =
-		exchangeStore.charts[exchangeStore.getCurrentChartId() - 1].type;
+	const type: any = exchangeStore.currentChartType;
+
 	const series: any = [
 		{
-			name: chartType,
-			data: exchangeStore.charts[exchangeStore.getCurrentChartId() - 1].data,
+			name: exchangeStore.currentChartType,
+			data: exchangeStore.candlestickChart.data,
 		},
 	];
 
-	const options: any = setOptions(chartType);
+	const options: any = setOptions(exchangeStore.currentChartType);
 
 	return (
 		<div id='chart'>
-			<Chart options={options} series={series} type={chartType} height={400} />
+			<Chart options={options} series={series} type={type} height={400} />
 		</div>
 	);
 });

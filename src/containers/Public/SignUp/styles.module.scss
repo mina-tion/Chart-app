@@ -32,11 +32,19 @@
         .submitButton {
             @include width-height(350px, 50px);
             @include text-style(20px);
-            margin: 0 0 30px 0;
 
             &:hover {
                 cursor: pointer;
             }
+        }
+    }
+
+    .link { 
+        margin-top: 20px;
+        color: rgb(197, 230, 240);
+
+        &:hover { 
+            text-decoration: underline !important;
         }
     }
 }

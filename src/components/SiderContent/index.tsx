@@ -28,7 +28,7 @@ const SiderContent: React.FC = observer(() => {
 					onClick={() => handlerClick(pair.id)}
 					className={classNames(
 						styles.cardWrapper,
-						exchangeStore.getCurrentPairId() === pair.id ? styles.active : ''
+						exchangeStore.currentPairId === pair.id && styles.active
 					)}
 				>
 					{pair.title}

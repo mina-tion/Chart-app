@@ -16,7 +16,7 @@ const ProfileInfo: React.FC = () => {
 		<div className={styles.profileInfoContainer}>
 			<h2 className={styles.usernameText}>{loginStore.getAccountName()}</h2>
 			<h3 className={styles.verificationText}>ACCOUNT VERFIED</h3>
-			<a className={styles.button} href='' onClick={handlerClick}>Logout</a>
+			<a className={styles.button} href='/' onClick={handlerClick}>Logout</a>
 		</div>
 	);
 };

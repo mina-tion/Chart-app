@@ -4,11 +4,15 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { schema, onSubmit } from 'utils/schema';
-
+import InputField from 'components/InputField';
 // style
 import styles from './styles.module.scss';
+import { useHistory } from 'react-router';
+
+
 
 const SingUp: React.FC = observer(() => {
+	const history = useHistory();
 	const {
 		register,
 		handleSubmit,
@@ -22,50 +26,50 @@ const SingUp: React.FC = observer(() => {
 			e.target.value.charAt(0).toUpperCase() +
 			e.target.value.substr(1).toLowerCase();
 	};
-
+	const handlerClick = () => { 
+		history.goBack()
+	}
 	return (
 		<div className={styles.container}>
 			<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-				<div className={styles.inputContainer}>
-					<p className={styles.inputTitle}>First name</p>
-					<input
-						{...register('firstName')}
-						onChange={handlerChange}
-						className={styles.inputField}
-					/>
-					<p className={styles.error}>{errors.firstName?.message}</p>
-				</div>
-				<div className={styles.inputContainer}>
-					<p className={styles.inputTitle}>Surname</p>
-					<input
-						{...register('lastName')}
-						onChange={handlerChange}
-						className={styles.inputField}
-					/>
-					<p className={styles.error}>{errors.firstName?.message}</p>
-				</div>
-				<div className={styles.inputContainer}>
-					<p className={styles.inputTitle}>Password</p>
-					<input
-						{...register('password')}
-						type='password'
-						className={styles.inputField}
-					/>
-					<p className={styles.error}>{errors.password?.message}</p>
-				</div>
-
-				<div className={styles.inputContainer}>
-					<p className={styles.inputTitle}>Password Confirmation</p>
-					<input
-						{...register('passwordConfirmation')}
-						type='password'
-						className={styles.inputField}
-					/>
-					<p className={styles.error}>{errors.passwordConfirmation?.message}</p>
-				</div>
+				<InputField
+					register={register}
+					type='text'
+					title='First name'
+					name='firstName'
+					errMessage={errors.firstName?.message}
+					onChange={handlerChange}
+				/>
+				<InputField
+					register={register}
+					type='text'
+					title='E-mail'
+					name='email'
+					errMessage={errors.email?.message}
+					onChange={() => {}}
+				/>
+				<InputField
+					register={register}
+					type='password'
+					title='Password'
+					name='password'
+					errMessage={errors.password?.message}
+					onChange={() => {}}
+				/>
+				<InputField
+					register={register}
+					type='password'
+					title='Password'
+					name='passwordConfirmation'
+					errMessage={errors.passwordConfirmation?.message}
+					onChange={() => {}}
+				/>
 
 				<input type='submit' value='Sign up' className={styles.submitButton} />
 			</form>
+
+			<a href="/" className={styles.link} onClick={handlerClick}>Already have an account? Sign in</a>
+
 		</div>
 	);
 });

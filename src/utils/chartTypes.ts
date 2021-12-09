@@ -1,4 +1,9 @@
-export const chartTypes = [
-	{ id: 1, type: 'candlestick', data: [] },
-	{ id: 2, type: 'line', data: [] },
-];
+export const candlestickChart = {
+	type: 'candlestick',
+	data: [],
+};
+
+export const lineChart = {
+	type: 'line',
+	data: [],
+};
