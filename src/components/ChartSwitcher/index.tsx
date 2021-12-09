@@ -14,8 +14,8 @@ const ChartSwitcher: React.FC = observer(() => {
 
 	return useObserver(() => (
 		<ul className={styles.chartList}>
-			<SwitcherItem key={1} type={exchangeStore.candlestickChart.type} />
-			<SwitcherItem key={2} type={exchangeStore.lineChart.type} />
+			<SwitcherItem keyd={1} type={exchangeStore.candlestickChart.type} />
+			<SwitcherItem keyd={2} type={exchangeStore.lineChart.type} />
 		</ul>
 	));
 });

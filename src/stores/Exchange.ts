@@ -1,4 +1,4 @@
-import { observable, action, makeObservable, computed } from 'mobx';
+import { observable, action, makeObservable } from 'mobx';
 import { periods } from 'utils/periods';
 import { currencyPairs } from 'utils/currencyPairs';
 import { candlestickChart, lineChart } from 'utils/chartTypes';

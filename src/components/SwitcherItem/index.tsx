@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import { useObserver } from 'mobx-react-lite';
 //components
@@ -8,16 +8,16 @@ import { useStore } from 'stores';
 import styles from './styles.module.scss';
 
 interface Props {
-	key: number;
+	keyd: number;
 	type: string;
 }
 
-const SwitcherItem: React.FC<Props> = ({ type, key }) => {
+const SwitcherItem: React.FC<Props> = ({ type, keyd }) => {
 	const { exchangeStore } = useStore();
 
 	return useObserver(() => (
 		<li
-			key={key}
+			key={keyd}
 			onClick={() => exchangeStore.setCurrentChartType(type)}
 			className={classNames(
 				styles.chartItem,
