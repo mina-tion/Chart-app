@@ -20,10 +20,6 @@ const Table: React.FC = observer(() => {
 		tableStore.setCurrentPage(page);
 	};
 
-	if (tableStore.isLoading) {
-		return <h1>Loading...</h1>;
-	}
-	console.log(tableStore.commentsData);
 	return (
 		<>
 			<table className={styles.table}>

@@ -8,17 +8,14 @@ import { setOptions } from 'utils/chartOptions';
 
 const ChartS: React.FC = observer(() => {
 	const { exchangeStore } = useStore();
-
 	const type: any = exchangeStore.currentChartType;
-
 	const series: any = [
 		{
-			name: exchangeStore.currentChartType,
+			name: type,
 			data: exchangeStore.candlestickChart.data,
 		},
 	];
-
-	const options: any = setOptions(exchangeStore.currentChartType);
+	const options: any = setOptions(type);
 
 	return (
 		<div id='chart'>
