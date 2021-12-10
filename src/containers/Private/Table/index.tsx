@@ -5,12 +5,11 @@ import { useStore } from 'stores';
 // style
 import styles from './styles.module.scss';
 import { Pagination } from 'antd';
-
-const headerTitles = ['Id', 'Name', 'Email', 'Body'];
+import { headerTitles } from 'utils/tableTitles';
 
 const Table: React.FC = observer(() => {
 	const { tableStore } = useStore();
-	
+
 	useEffect(() => {
 		tableStore.setLoading(true);
 		tableStore.fetchTableData();
@@ -24,7 +23,7 @@ const Table: React.FC = observer(() => {
 	if (tableStore.isLoading) {
 		return <h1>Loading...</h1>;
 	}
-	console.log(tableStore.commentsData)
+	console.log(tableStore.commentsData);
 	return (
 		<>
 			<table className={styles.table}>
@@ -43,11 +42,13 @@ const Table: React.FC = observer(() => {
 					))}
 				</tbody>
 			</table>
-			<Pagination
-				current={tableStore.currentPage}
-				onChange={handlerChange}
-				total={500}
-			/>
+			<div className={styles.pagesWrapper}>
+				<Pagination
+					current={tableStore.currentPage}
+					onChange={handlerChange}
+					total={500}
+				/>
+			</div>
 		</>
 	);
 });
