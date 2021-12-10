@@ -20,8 +20,8 @@ const Table: React.FC = observer(() => {
 		tableStore.setCurrentPage(page);
 	};
 
-return (
-		<>
+
+	return (		<>
 			<table className={styles.table}>
 				<thead className={styles.header}>
 					{headerTitles.map((title) => (
