@@ -46,6 +46,7 @@ class Store {
 	}
 
 	getCurrentPairTitle() {
+		console.log('cur pair', this.currentPairId)
 		return this.pairs.find((pair) =>
 			pair.id === this.currentPairId ? true : false
 		)?.title;

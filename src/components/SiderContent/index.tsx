@@ -1,14 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-
-//components
+import { useStore } from 'stores';
 
 // style
 import styles from './styles.module.scss';
 
-// utils
-import classNames from 'classnames';
-import { useStore } from 'stores';
+//components
+import PairList from './pairList';
 
 const SiderContent: React.FC = observer(() => {
 	const { exchangeStore } = useStore();
@@ -20,18 +18,11 @@ const SiderContent: React.FC = observer(() => {
 	return (
 		<div className={styles.contentWrapper}>
 			<h2 className={styles.title}>Popular pairs</h2>
-			{exchangeStore.pairs.map((pair) => (
-				<li
-					key={pair.id}
-					onClick={() => handlerClick(pair.id)}
-					className={classNames(
-						styles.cardWrapper,
-						exchangeStore.currentPairId === pair.id && styles.active
-					)}
-				>
-					{pair.title}
-				</li>
-			))}
+			<PairList
+				pairs={exchangeStore.pairs}
+				currentPairId={exchangeStore.currentPairId}
+				handlerClick={handlerClick}
+			/>
 		</div>
 	);
 });
