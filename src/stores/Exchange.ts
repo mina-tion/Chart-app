@@ -3,7 +3,7 @@ import { periods } from 'utils/periods';
 import { currencyPairs } from 'utils/currencyPairs';
 import { candlestickChart, lineChart } from 'utils/chartTypes';
 import { api } from 'config';
-import { getStartDate, getEndDate } from 'utils/getDate';
+import { getStartDate, getEndDate } from 'utils/const';
 
 class Store {
 	constructor() {
@@ -46,9 +46,8 @@ class Store {
 	}
 
 	getCurrentPairTitle() {
-		console.log('cur pair', this.currentPairId)
 		return this.pairs.find((pair) =>
-			pair.id === this.currentPairId ? true : false
+			pair.id === this.currentPairId
 		)?.title;
 	}
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { useStore } from 'stores';
-import { useObserver } from 'mobx-react-lite';
+import { useObserver } from 'mobx-react';
 
 //components
 import SwitcherItem from './switcherItem';

@@ -6,9 +6,9 @@ import styles from './styles.module.scss';
 import classNames from 'classnames';
 
 interface Props {
-	pairs: any;
+	pairs: { id: number; title: string }[];
 	currentPairId: number;
-	handlerClick: any;
+	handlerClick: (id: number) => void;
 }
 
 const PairList: React.FC<Props> = ({ pairs, handlerClick, currentPairId }) => {

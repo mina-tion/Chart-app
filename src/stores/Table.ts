@@ -22,6 +22,10 @@ class Store {
 
 	@action
 	async fetchTableData() {
+
+		/* tableStore.setLoading(true);
+		tableStore.fetchTableData();
+		tableStore.setLoading(false); */
 		this.commentsData = [];
 		console.log(this.currentPage, 'curPage');
 		const res = await api.get(

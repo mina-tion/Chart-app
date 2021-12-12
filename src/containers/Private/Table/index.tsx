@@ -11,28 +11,30 @@ const Table: React.FC = observer(() => {
 	const { tableStore } = useStore();
 
 	useEffect(() => {
-		tableStore.setLoading(true);
 		tableStore.fetchTableData();
-		tableStore.setLoading(false);
 	}, []);
 
 	const handlerChange = (page: number) => {
 		tableStore.setCurrentPage(page);
 	};
 
-
-	return (		<>
+	return (
+		<>
 			<table className={styles.table}>
 				<thead className={styles.header}>
-					{headerTitles.map((title) => (
-						<th className={styles.title}>{title}</th>
+					{headerTitles.map((title, index) => (
+						<th key={index} className={styles.title}>
+							{title}
+						</th>
 					))}
 				</thead>
 				<tbody className={styles.body}>
 					{tableStore.commentsData.map((comment: any) => (
 						<tr className={styles.row}>
-							{Object.keys(comment).map((key): any => (
-								<td className={styles.item}>{comment[key]}</td>
+							{Object.keys(comment).map((key, index): any => (
+								<td key={index} className={styles.item}>
+									{comment[key]}
+								</td>
 							))}
 						</tr>
 					))}
@@ -43,6 +45,7 @@ const Table: React.FC = observer(() => {
 					current={tableStore.currentPage}
 					onChange={handlerChange}
 					total={500}
+					pageSizeOptions={[]}
 				/>
 			</div>
 		</>
